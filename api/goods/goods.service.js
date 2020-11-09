@@ -3,7 +3,7 @@ const pool = require("../../config/database");
 module.exports = {
   getGoods: (callBack) => {
     pool.query(
-      'SELECT * FROM `tb_goods` ',
+      'SELECT * FROM `products`',
       [],
       (error, results, fields) => {
         if (error) {
@@ -15,7 +15,7 @@ module.exports = {
   },
   getGoodsById: (data,callBack) => {
     pool.query(
-      'SELECT * FROM `tb_goods` WHERE `id_goods` = ?',
+      'SELECT * FROM `products` WHERE `productID` = ?',
       [data],
       (error, results, fields) => {
         if (error) {
@@ -27,8 +27,8 @@ module.exports = {
   },
   updateGoodsById: (data,callBack) => {
     pool.query(
-      'UPDATE `tb_goods` SET `name_goods`=?,`price_goods`=?,`date_goods`=? WHERE id_goods=?',
-      [data.name_goods,data.price_goods,data.date_goods,data.id_goods],
+      'UPDATE `products` SET `name`=?,`productCode`=?,`quantity`,`price`=? WHERE productID=?',
+      [data.name,data.productCode,data.quantity,data.price],
       (error, results, fields) => {
         if (error) {
           callBack(error);
@@ -39,7 +39,7 @@ module.exports = {
   },
   deleteGoodsById: (id,callBack) => {
     pool.query(
-      'DELETE FROM `tb_goods` WHERE `tb_goods`.`id_goods` = ?',
+      'DELETE FROM `products` WHERE `products`.`productID` = ?',
       [id],
       (error, results, fields) => {
         if (error) {
@@ -49,5 +49,16 @@ module.exports = {
       }
     );
   },
-
+  insertGoodsById: (data,callBack) => {
+    pool.query(
+      'INSERT INTO `products`(`productCode`, `name`, `quantity`, `price`) VALUES (?,?,?,?)',
+      [data.productCode,data.name,data.quantity,data.price],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 };

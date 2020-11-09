@@ -3,12 +3,14 @@ const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
 const userRouter = require("./api/users/user.router");
+const productRouter = require("./api/goods/goods.router");
 
 app.use(bodyParser());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 app.use('/api/user',userRouter);
+app.use('/api/product',productRouter);
 
 
 app.listen(process.env.APP_PORT, () => {

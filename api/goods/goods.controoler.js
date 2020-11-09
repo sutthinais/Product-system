@@ -3,6 +3,7 @@ const {
     getGoodsById,
     updateGoodsById,
     deleteGoodsById,
+    insertGoodsById,
 } = require("../goods/goods.service");
 module.exports = {
     updateGoodsById: (req, res) => {
@@ -68,4 +69,21 @@ module.exports = {
             });
         });
     },
+    insertGoodsById: (req, res) => {
+        const body = req.body;
+        insertGoodsById(body,(err, results) => {
+            if (err) {
+                console.log(err);
+                return res.json({
+                    success: 0,
+                    message: "not get data!"
+                });
+            }
+            return res.json({
+                success: 1,
+                message: "insert data success!"
+            });
+        });
+    },
+    
 };
